@@ -132,8 +132,6 @@ public class IPCConnectionManager extends ConnectionManager {
 	@Override
 	public void connect() {
 		PackageManager pm = mCtx.getPackageManager();
-		ComponentName comp = new ComponentName("com.inputstick.apps.inputstickutility", "com.inputstick.apps.inputstickutility.service.InputStickService");
-
 		boolean exists = true;
 		try {
 			pm.getPackageInfo("com.inputstick.apps.inputstickutility", PackageManager.GET_META_DATA);
