@@ -1,25 +1,20 @@
 package com.inputstick.api;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
-import java.util.function.Consumer;
-
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
-import android.util.Log;
+
+import java.lang.ref.WeakReference;
 
 public class IPCConnectionManager extends ConnectionManager {
 	
@@ -33,7 +28,6 @@ public class IPCConnectionManager extends ConnectionManager {
 	boolean mBound;
 	boolean initSent;
     final Messenger mMessenger = new Messenger(new IncomingHandler(this));
-	public static Consumer<Void> onConnect=null;
     
     private static class IncomingHandler extends Handler {    	
     	private final WeakReference<IPCConnectionManager> ref; 
@@ -79,10 +73,6 @@ public class IPCConnectionManager extends ConnectionManager {
             mService = new Messenger(service);
             mBound = true;                  
             sendConnectMessage();
-
-			if(onConnect!=null){
-				onConnect.accept(null);
-			}
         }
 
         public void onServiceDisconnected(ComponentName className) {
