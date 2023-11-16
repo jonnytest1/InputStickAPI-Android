@@ -3,7 +3,6 @@ package com.inputstick.api.utils.remote;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
@@ -11,21 +10,30 @@ import android.widget.ToggleButton;
 import com.inputstick.api.ConnectionManager;
 import com.inputstick.api.hid.HIDKeycodes;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import androidx.constraintlayout.widget.Group;
 public class ModifiersSupport {
 	
 	protected RemoteSupport mRemote;
 	
-	protected ViewGroup layoutMain;
-	protected ToggleButton toggleButtonCtrl;
-	protected ToggleButton toggleButtonShift;
-	protected ToggleButton toggleButtonAlt;
-	protected ToggleButton toggleButtonGui;
-	protected ToggleButton toggleButtonAltGr;
+	protected Group layoutMain;
+	public ToggleButton toggleButtonCtrl;
+	public ToggleButton toggleButtonShift;
+	public ToggleButton toggleButtonAlt;
+	public ToggleButton toggleButtonGui;
+	public ToggleButton toggleButtonAltGr;
 	protected Button buttonContext;	
 	
-	protected boolean isResetting;	
+	protected boolean isResetting;
+
+	public List<Consumer<Boolean>> shiftListeners=new ArrayList<>();
+	public List<Consumer<Boolean>> ctrlListeners =new ArrayList<>();
+	public List<Consumer<Boolean>> altListeners =new ArrayList<>();
 	
-	public ModifiersSupport(RemoteSupport remote, ViewGroup layout, ToggleButton ctrl, ToggleButton shift, ToggleButton alt, ToggleButton gui, ToggleButton altGr, Button context) {
+	public ModifiersSupport(RemoteSupport remote, Group layout, ToggleButton ctrl, ToggleButton shift, ToggleButton alt, ToggleButton gui, ToggleButton altGr, Button context) {
 		mRemote = remote;
 		layoutMain = layout;
 		toggleButtonCtrl = ctrl;
@@ -40,6 +48,9 @@ public class ModifiersSupport {
 			public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
 				if (isResetting) return;
 				update();
+				ctrlListeners.forEach(l->{
+					l.accept(isChecked);
+				});
 			}
 		});
 		toggleButtonShift.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -47,6 +58,9 @@ public class ModifiersSupport {
 			public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
 				if (isResetting) return;
 				update();
+				shiftListeners.forEach(l->{
+					l.accept(isChecked);
+				});
 			}
 		});
 		toggleButtonAlt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -54,6 +68,9 @@ public class ModifiersSupport {
 			public void onCheckedChanged(CompoundButton buttonView,	boolean isChecked) {
 				if (isResetting) return;
 				update();
+				altListeners.forEach(l->{
+					l.accept(isChecked);
+				});
 			}
 		});
 		toggleButtonGui.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

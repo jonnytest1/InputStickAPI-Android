@@ -48,8 +48,11 @@ public class InputStickKeyboard {
 	
 	private InputStickKeyboard() {
 	}
-	
-	
+
+	public static void pressAndRelease(byte key) {
+
+		pressAndRelease(HIDKeycodes.NONE, key);
+	}
 	/*
 	 * Uses InputStick to press and then immediately release key combination specified by parameters.
 	 * 

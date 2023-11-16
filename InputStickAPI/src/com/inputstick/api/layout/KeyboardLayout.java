@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.example.jonathan.androidkvm.Key;
 import com.inputstick.api.ConnectionManager;
 import com.inputstick.api.Packet;
 import com.inputstick.api.basic.InputStickHID;
 import com.inputstick.api.hid.HIDKeycodes;
 import com.inputstick.api.hid.HIDTransaction;
 import com.inputstick.api.hid.ShortKeyboardReport;
+import com.inputstick.api.utils.remote.ModifiersSupport;
 
 public abstract class KeyboardLayout {
 	
@@ -526,8 +528,24 @@ public abstract class KeyboardLayout {
 		}
 		return result;
 	}
-	
-	
+
+	public Key getText(ModifiersSupport mods, int[] key){
+		int charc = key[1];
+		boolean altgrEnabled=mods.toggleButtonAlt.isChecked()||(mods.toggleButtonCtrl.isChecked()&& mods.toggleButtonAlt.isChecked());
+
+		if(altgrEnabled){
+			charc=key[5];
+		}else if(mods.toggleButtonCtrl.isChecked()){
+			charc=key[3];
+		}else if(mods.toggleButtonShift.isChecked()){
+			charc=key[2];
+		}
+		if(charc==-1){
+			return new Key(new String(new char[]{(char)  key[1]}),"");
+		}
+		return new Key(new String(new char[]{(char) charc}));
+	}
+
 
 	
 	

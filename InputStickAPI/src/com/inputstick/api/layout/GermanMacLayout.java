@@ -173,7 +173,7 @@ public class GermanMacLayout extends KeyboardLayout {
 		/*	0f	*/	{	-1	,	0			,	0			,	0		,	0		,	0		}	,
 		
 		
-		/*	10	*/	{	1	,	(int)'q'	,	(int)'Q'	,	-1		,	-1		,	-1		}	,
+		/*	10	*/	{	1	,	(int)'q'	,	(int)'Q'	,	-1		,	(int)'@'		,	-1		}	,
 		/*	11	*/	{	1	,	(int)'w'	,	(int)'W'	,	-1		,	-1		,	-1		}	,
 		/*	12	*/	{	1	,	(int)'e'	,	(int)'E'	,	-1		,	0x20ac	,	-1		}	, //euro, same as Windows layout
 		/*	13	*/	{	1	,	(int)'r'	,	(int)'R'	,	-1		,	-1		,	-1		}	,

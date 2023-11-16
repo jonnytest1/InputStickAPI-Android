@@ -303,7 +303,7 @@ public class KeyboardSupport {
 		dialog.setView(sl);						
 		dialog.setPositiveButton(android.R.string.cancel, null);
 		    	
-		final AlertDialog tmp = dialog.create();
+		final AlertDialog tmp = dialog.show();
 		return tmp;
     }
     
