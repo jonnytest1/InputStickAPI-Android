@@ -54,6 +54,16 @@ InputStickBroadcast.type(context, "text to type", "en-US);
 
 If you need more control, use "full" API (requires more code to implement):
 
+⚠️ you need to add in `manifests/AndroidManifest.xml`
+```xml
+<manifest ...>
+	<queries>
+		<package android:name="com.inputstick.apps.inputstickutility" />
+	</queries>
+	
+	...
+```
+
 Managing connection:
 `com.inputstick.api.basic.InputStickHID`
 ```java
